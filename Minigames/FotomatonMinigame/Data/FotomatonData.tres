@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MinigameData" format=3 uid="uid://dhlrhnxsk35rp"]
+
+[ext_resource type="Script" uid="uid://drgtpugs7dwxs" path="res://Scripts/Minigames/MinigameData.gd" id="1_y6ktd"]
+[ext_resource type="Texture2D" uid="uid://bi6ercdq2vvjf" path="res://icon.svg" id="2_030ip"]
+
+[resource]
+script = ExtResource("1_y6ktd")
+minigameName = "Fotomaton"
+description = "juego mu guapo"
+tutorialImage = ExtResource("2_030ip")
+developersAndPosition = Dictionary[String, String]({
+"Angie": "sdfgsdfg",
+"Diego": "sfsdfd"
+})
+metadata/_custom_type_script = "uid://drgtpugs7dwxs"

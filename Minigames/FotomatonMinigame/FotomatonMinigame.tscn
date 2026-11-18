@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://clgojulehmht0"]
+
+[ext_resource type="Script" uid="uid://cac0sb6a3ske3" path="res://Minigames/FotomatonMinigame/Scripts/FotomatonMinigame.gd" id="1_o28q0"]
+[ext_resource type="Resource" uid="uid://dhlrhnxsk35rp" path="res://Minigames/FotomatonMinigame/Data/FotomatonData.tres" id="2_5c2be"]
+[ext_resource type="Script" uid="uid://cv1bna6fcv7fg" path="res://Minigames/FotomatonMinigame/Scripts/pose_info.gd" id="2_storp"]
+[ext_resource type="Resource" uid="uid://uy5jxcijn1ux" path="res://Minigames/FotomatonMinigame/Data/Poses/angry_pose.tres" id="3_a6myq"]
+[ext_resource type="Script" uid="uid://byryohecqvrbx" path="res://Minigames/FotomatonMinigame/Scripts/points_controller.gd" id="3_emk4p"]
+[ext_resource type="Resource" uid="uid://cly74l1ecn0g8" path="res://Minigames/FotomatonMinigame/Data/Poses/happy_pose.tres" id="4_qm1a7"]
+[ext_resource type="Resource" uid="uid://dwx5g08mi4vyp" path="res://Minigames/FotomatonMinigame/Data/Poses/sleepy_pose.tres" id="5_tn6ve"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ty0te"]
+font_size = 60
+
+[sub_resource type="LabelSettings" id="LabelSettings_w4mfu"]
+font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_3ahog"]
+font_size = 50
+
+[node name="Fotomaton Minigame" type="Node" unique_id=93012476 node_paths=PackedStringArray("points_controller", "minigame_timer", "current_pose_timer", "cooldown_timer", "target_pose_label", "current_pose_label", "scored_point_label", "batery_bar")]
+script = ExtResource("1_o28q0")
+points_controller = NodePath("Points Controller")
+minigame_timer = NodePath("Timers/Minigame Timer")
+current_pose_timer = NodePath("Timers/CurrentPose Timer")
+cooldown_timer = NodePath("Timers/Cooldown")
+poses_array = Array[ExtResource("2_storp")]([ExtResource("3_a6myq"), ExtResource("4_qm1a7"), ExtResource("5_tn6ve")])
+target_pose_label = NodePath("Info Panel/Target Pose Label")
+current_pose_label = NodePath("Info Panel/Current Pose Label")
+scored_point_label = NodePath("Info Panel/Scored Point Label")
+batery_bar = NodePath("Info Panel/Batery Bar")
+minigameData = ExtResource("2_5c2be")
+
+[node name="Timers" type="Node" parent="." unique_id=22919050]
+
+[node name="Minigame Timer" type="Timer" parent="Timers" unique_id=254923230]
+wait_time = 15.0
+one_shot = true
+
+[node name="CurrentPose Timer" type="Timer" parent="Timers" unique_id=1370710107]
+wait_time = 2.0
+
+[node name="Cooldown" type="Timer" parent="Timers" unique_id=1912173156]
+one_shot = true
+
+[node name="Points Controller" type="VBoxContainer" parent="." unique_id=1333427269 node_paths=PackedStringArray("players_labels")]
+offset_left = 6.0
+offset_top = 225.0
+offset_right = 147.0
+offset_bottom = 569.0
+script = ExtResource("3_emk4p")
+players_labels = [NodePath("P1 Label"), NodePath("P2 Label"), NodePath("P3 Label"), NodePath("P4 Label")]
+
+[node name="P1 Label" type="Label" parent="Points Controller" unique_id=218236158]
+layout_mode = 2
+text = "P1: X"
+label_settings = SubResource("LabelSettings_ty0te")
+
+[node name="P2 Label" type="Label" parent="Points Controller" unique_id=848815975]
+layout_mode = 2
+text = "P2: X"
+label_settings = SubResource("LabelSettings_ty0te")
+
+[node name="P3 Label" type="Label" parent="Points Controller" unique_id=269614515]
+layout_mode = 2
+text = "P3: X"
+label_settings = SubResource("LabelSettings_ty0te")
+
+[node name="P4 Label" type="Label" parent="Points Controller" unique_id=414265801]
+layout_mode = 2
+text = "P4: X"
+label_settings = SubResource("LabelSettings_ty0te")
+
+[node name="Info Panel" type="VBoxContainer" parent="." unique_id=42995208]
+offset_left = 711.0
+offset_top = 86.0
+offset_right = 1112.0
+offset_bottom = 301.0
+theme_override_constants/separation = 20
+
+[node name="Target Pose Label" type="Label" parent="Info Panel" unique_id=2013306807]
+layout_mode = 2
+text = "target pose: ---"
+label_settings = SubResource("LabelSettings_w4mfu")
+
+[node name="Current Pose Label" type="Label" parent="Info Panel" unique_id=1332952487]
+layout_mode = 2
+text = "current pose: ---"
+label_settings = SubResource("LabelSettings_w4mfu")
+
+[node name="Scored Point Label" type="Label" parent="Info Panel" unique_id=1645439600]
+layout_mode = 2
+text = "Point for player: "
+label_settings = SubResource("LabelSettings_3ahog")
+
+[node name="Batery Bar" type="ProgressBar" parent="Info Panel" unique_id=644523419]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
