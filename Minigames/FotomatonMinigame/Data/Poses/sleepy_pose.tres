@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="PoseInfo" format=3 uid="uid://dwx5g08mi4vyp"]
 
 [ext_resource type="Script" uid="uid://cv1bna6fcv7fg" path="res://Minigames/FotomatonMinigame/Scripts/pose_info.gd" id="1_xq3wd"]
-[ext_resource type="Texture2D" uid="uid://bi6ercdq2vvjf" path="res://icon.svg" id="2_v1rcd"]
+[ext_resource type="Texture2D" uid="uid://oug5daolt3v8" path="res://Minigames/FotomatonMinigame/Images/sleepy_cat.jpg" id="2_xq3wd"]
 
 [resource]
 script = ExtResource("1_xq3wd")
 name = "sleepy"
-sketch = ExtResource("2_v1rcd")
+sketch = ExtResource("2_xq3wd")
 metadata/_custom_type_script = "uid://cv1bna6fcv7fg"

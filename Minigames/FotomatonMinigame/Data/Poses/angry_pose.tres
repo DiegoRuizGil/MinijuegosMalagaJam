@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="PoseInfo" format=3 uid="uid://uy5jxcijn1ux"]
 
 [ext_resource type="Script" uid="uid://cv1bna6fcv7fg" path="res://Minigames/FotomatonMinigame/Scripts/pose_info.gd" id="1_urr75"]
-[ext_resource type="Texture2D" uid="uid://bi6ercdq2vvjf" path="res://icon.svg" id="2_f444m"]
+[ext_resource type="Texture2D" uid="uid://b6tpk7pi43mu7" path="res://Minigames/FotomatonMinigame/Images/angry_cat.jpg" id="2_urr75"]
 
 [resource]
 script = ExtResource("1_urr75")
 name = "angry"
-sketch = ExtResource("2_f444m")
+sketch = ExtResource("2_urr75")
 metadata/_custom_type_script = "uid://cv1bna6fcv7fg"

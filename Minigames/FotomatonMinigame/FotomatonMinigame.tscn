@@ -7,27 +7,40 @@
 [ext_resource type="Script" uid="uid://byryohecqvrbx" path="res://Minigames/FotomatonMinigame/Scripts/points_controller.gd" id="3_emk4p"]
 [ext_resource type="Resource" uid="uid://cly74l1ecn0g8" path="res://Minigames/FotomatonMinigame/Data/Poses/happy_pose.tres" id="4_qm1a7"]
 [ext_resource type="Resource" uid="uid://dwx5g08mi4vyp" path="res://Minigames/FotomatonMinigame/Data/Poses/sleepy_pose.tres" id="5_tn6ve"]
+[ext_resource type="Texture2D" uid="uid://bi6ercdq2vvjf" path="res://icon.svg" id="8_a6myq"]
+[ext_resource type="Script" uid="uid://biexcro6w47q1" path="res://Minigames/FotomatonMinigame/Scripts/camera_lens.gd" id="9_qm1a7"]
+[ext_resource type="Script" uid="uid://d3mummj353njq" path="res://Minigames/FotomatonMinigame/Scripts/battery.gd" id="10_awpip"]
+[ext_resource type="Texture2D" uid="uid://b658jj2qsvfra" path="res://Minigames/FotomatonMinigame/Images/battery.png" id="10_tn6ve"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ty0te"]
-font_size = 60
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_bn5ri"]
+font_size = 30
+font_color = Color(0, 0, 0, 1)
+outline_size = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_w4mfu"]
-font_size = 50
+font_size = 30
+font_color = Color(0, 0, 0, 1)
+outline_size = 10
 
-[sub_resource type="LabelSettings" id="LabelSettings_3ahog"]
-font_size = 50
+[sub_resource type="PlaneMesh" id="PlaneMesh_w4mfu"]
 
-[node name="Fotomaton Minigame" type="Node" unique_id=93012476 node_paths=PackedStringArray("points_controller", "minigame_timer", "current_pose_timer", "cooldown_timer", "target_pose_label", "current_pose_label", "scored_point_label", "batery_bar")]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ty0te"]
+
+[node name="Fotomaton Minigame" type="Node" unique_id=93012476 node_paths=PackedStringArray("points_controller", "minigame_timer", "current_pose_timer", "battery", "camera_lens", "target_pose_image", "target_pose_label", "current_pose_image", "current_pose_label")]
 script = ExtResource("1_o28q0")
-points_controller = NodePath("Points Controller")
+points_controller = NodePath("CanvasLayer/UI Root/Points Controller")
 minigame_timer = NodePath("Timers/Minigame Timer")
 current_pose_timer = NodePath("Timers/CurrentPose Timer")
-cooldown_timer = NodePath("Timers/Cooldown")
+battery = NodePath("CanvasLayer/UI Root/Battery")
+camera_lens = NodePath("CanvasLayer/UI Root/Camera Lens")
 poses_array = Array[ExtResource("2_storp")]([ExtResource("3_a6myq"), ExtResource("4_qm1a7"), ExtResource("5_tn6ve")])
-target_pose_label = NodePath("Info Panel/Target Pose Label")
-current_pose_label = NodePath("Info Panel/Current Pose Label")
-scored_point_label = NodePath("Info Panel/Scored Point Label")
-batery_bar = NodePath("Info Panel/Batery Bar")
+target_pose_image = NodePath("CanvasLayer/UI Root/Target Pose")
+target_pose_label = NodePath("CanvasLayer/UI Root/Target Pose/Target Pose Label")
+current_pose_image = NodePath("CanvasLayer/UI Root/Current Pose")
+current_pose_label = NodePath("CanvasLayer/UI Root/Current Pose/Current Pose Label")
 minigameData = ExtResource("2_5c2be")
 
 [node name="Timers" type="Node" parent="." unique_id=22919050]
@@ -39,60 +52,272 @@ one_shot = true
 [node name="CurrentPose Timer" type="Timer" parent="Timers" unique_id=1370710107]
 wait_time = 2.0
 
-[node name="Cooldown" type="Timer" parent="Timers" unique_id=1912173156]
-one_shot = true
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1261060668]
 
-[node name="Points Controller" type="VBoxContainer" parent="." unique_id=1333427269 node_paths=PackedStringArray("players_labels")]
-offset_left = 6.0
-offset_top = 225.0
-offset_right = 147.0
-offset_bottom = 569.0
+[node name="UI Root" type="Control" parent="CanvasLayer" unique_id=1727986352]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Points Controller" type="VBoxContainer" parent="CanvasLayer/UI Root" unique_id=1333427269 node_paths=PackedStringArray("players_labels")]
+layout_mode = 1
+offset_right = 141.0
+offset_bottom = 180.0
 script = ExtResource("3_emk4p")
 players_labels = [NodePath("P1 Label"), NodePath("P2 Label"), NodePath("P3 Label"), NodePath("P4 Label")]
 
-[node name="P1 Label" type="Label" parent="Points Controller" unique_id=218236158]
+[node name="P1 Label" type="Label" parent="CanvasLayer/UI Root/Points Controller" unique_id=218236158]
 layout_mode = 2
 text = "P1: X"
 label_settings = SubResource("LabelSettings_ty0te")
 
-[node name="P2 Label" type="Label" parent="Points Controller" unique_id=848815975]
+[node name="P2 Label" type="Label" parent="CanvasLayer/UI Root/Points Controller" unique_id=848815975]
 layout_mode = 2
 text = "P2: X"
 label_settings = SubResource("LabelSettings_ty0te")
 
-[node name="P3 Label" type="Label" parent="Points Controller" unique_id=269614515]
+[node name="P3 Label" type="Label" parent="CanvasLayer/UI Root/Points Controller" unique_id=269614515]
 layout_mode = 2
 text = "P3: X"
 label_settings = SubResource("LabelSettings_ty0te")
 
-[node name="P4 Label" type="Label" parent="Points Controller" unique_id=414265801]
+[node name="P4 Label" type="Label" parent="CanvasLayer/UI Root/Points Controller" unique_id=414265801]
 layout_mode = 2
 text = "P4: X"
 label_settings = SubResource("LabelSettings_ty0te")
 
-[node name="Info Panel" type="VBoxContainer" parent="." unique_id=42995208]
-offset_left = 711.0
-offset_top = 86.0
-offset_right = 1112.0
-offset_bottom = 301.0
-theme_override_constants/separation = 20
+[node name="Target Pose" type="TextureRect" parent="CanvasLayer/UI Root" unique_id=1589919926]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -216.0
+offset_right = 384.0
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0, 1)
+texture = ExtResource("8_a6myq")
+expand_mode = 1
 
-[node name="Target Pose Label" type="Label" parent="Info Panel" unique_id=2013306807]
-layout_mode = 2
-text = "target pose: ---"
+[node name="Target Pose Label" type="Label" parent="CanvasLayer/UI Root/Target Pose" unique_id=1273718114]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "croquetas"
+label_settings = SubResource("LabelSettings_bn5ri")
+horizontal_alignment = 1
+
+[node name="Current Pose" type="TextureRect" parent="CanvasLayer/UI Root" unique_id=414522708]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 300.0
+offset_right = 284.0
+offset_bottom = 516.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_a6myq")
+expand_mode = 1
+
+[node name="Current Pose Label" type="Label" parent="CanvasLayer/UI Root/Current Pose" unique_id=1332952487]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "croquetas"
 label_settings = SubResource("LabelSettings_w4mfu")
+horizontal_alignment = 1
 
-[node name="Current Pose Label" type="Label" parent="Info Panel" unique_id=1332952487]
-layout_mode = 2
-text = "current pose: ---"
-label_settings = SubResource("LabelSettings_w4mfu")
+[node name="Camera Lens" type="Control" parent="CanvasLayer/UI Root" unique_id=1173765373]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -270.0
+offset_right = 480.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(480, 270)
+script = ExtResource("9_qm1a7")
+shoot_scale = 0.9
+shoot_duration = 0.1
+turn_on_color = Color(1, 1, 1, 1)
+turn_off_color = Color(0.5211406, 0.5211406, 0.5211405, 1)
 
-[node name="Scored Point Label" type="Label" parent="Info Panel" unique_id=1645439600]
-layout_mode = 2
-text = "Point for player: "
-label_settings = SubResource("LabelSettings_3ahog")
+[node name="Top Left" type="ColorRect" parent="CanvasLayer/UI Root/Camera Lens" unique_id=210216105]
+layout_mode = 1
+offset_right = 50.0
+offset_bottom = 15.0
 
-[node name="Batery Bar" type="ProgressBar" parent="Info Panel" unique_id=644523419]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UI Root/Camera Lens/Top Left" unique_id=1817948453]
+layout_mode = 0
+offset_right = 15.0
+offset_bottom = 50.0
+
+[node name="Top Right" type="ColorRect" parent="CanvasLayer/UI Root/Camera Lens" unique_id=461477541]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_bottom = 15.0
+grow_horizontal = 0
+pivot_offset_ratio = Vector2(1, 0)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UI Root/Camera Lens/Top Right" unique_id=1848473691]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -15.0
+offset_bottom = 50.0
+grow_horizontal = 0
+pivot_offset_ratio = Vector2(1, 0)
+
+[node name="Bottom Right" type="ColorRect" parent="CanvasLayer/UI Root/Camera Lens" unique_id=901404029]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -15.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset_ratio = Vector2(1, 1)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UI Root/Camera Lens/Bottom Right" unique_id=809626233]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -15.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset_ratio = Vector2(1, 1)
+
+[node name="Bottom Left" type="ColorRect" parent="CanvasLayer/UI Root/Camera Lens" unique_id=1916707003]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = 50.0
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UI Root/Camera Lens/Bottom Left" unique_id=1723276628]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_right = 15.0
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0, 1)
+
+[node name="Battery" type="Control" parent="CanvasLayer/UI Root" unique_id=682186129 node_paths=PackedStringArray("cooldown_timer", "sprites")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("10_awpip")
+cooldown_timer = NodePath("Cooldown")
+sprites = [NodePath("Cells/Slot/Battery Sprite 1"), NodePath("Cells/Slot2/Battery Sprite 2"), NodePath("Cells/Slot3/Battery Sprite 3"), NodePath("Cells/Slot4/Battery Sprite 4")]
+
+[node name="Cells" type="HBoxContainer" parent="CanvasLayer/UI Root/Battery" unique_id=114068810]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -211.0
+offset_top = -73.0
+offset_right = -39.0
+offset_bottom = -33.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset_ratio = Vector2(1, 1)
+
+[node name="Slot" type="Control" parent="CanvasLayer/UI Root/Battery/Cells" unique_id=1370157776]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-max_value = 1.0
-step = 0.0
+
+[node name="Battery Sprite 1" type="TextureRect" parent="CanvasLayer/UI Root/Battery/Cells/Slot" unique_id=1327288656]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("10_tn6ve")
+
+[node name="Slot2" type="Control" parent="CanvasLayer/UI Root/Battery/Cells" unique_id=1566799752]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Battery Sprite 2" type="TextureRect" parent="CanvasLayer/UI Root/Battery/Cells/Slot2" unique_id=1530944665]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("10_tn6ve")
+
+[node name="Slot3" type="Control" parent="CanvasLayer/UI Root/Battery/Cells" unique_id=400445404]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Battery Sprite 3" type="TextureRect" parent="CanvasLayer/UI Root/Battery/Cells/Slot3" unique_id=849509479]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("10_tn6ve")
+
+[node name="Slot4" type="Control" parent="CanvasLayer/UI Root/Battery/Cells" unique_id=1645475690]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="Battery Sprite 4" type="TextureRect" parent="CanvasLayer/UI Root/Battery/Cells/Slot4" unique_id=1446454808]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("10_tn6ve")
+
+[node name="Cooldown" type="Timer" parent="CanvasLayer/UI Root/Battery" unique_id=1912173156]
+one_shot = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1346584023]
+transform = Transform3D(1, 0, 0, 0, 0.9776357, 0.21030566, 0, -0.21030566, 0.9776357, 0, 2.3074832, 4.1974235)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1397484098]
+transform = Transform3D(1, 0, 0, 0, 0.52188134, 0.8530181, 0, -0.8530181, 0.52188134, 0, 4.518291, 5.0489707)
+light_energy = 3.0
+
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=1007324174]
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
+mesh = SubResource("PlaneMesh_w4mfu")
+
+[node name="Capsule" type="MeshInstance3D" parent="." unique_id=1289821771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_ty0te")

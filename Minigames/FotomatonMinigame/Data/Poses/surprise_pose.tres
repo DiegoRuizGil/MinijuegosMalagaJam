@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PoseInfo" format=3 uid="uid://cxx6h5maidjdr"]
+
+[ext_resource type="Script" uid="uid://cv1bna6fcv7fg" path="res://Minigames/FotomatonMinigame/Scripts/pose_info.gd" id="1_ct2x4"]
+[ext_resource type="Texture2D" uid="uid://mpqdrobkdwnb" path="res://Minigames/FotomatonMinigame/Images/surprise_cat.jpg" id="2_ct2x4"]
+
+[resource]
+script = ExtResource("1_ct2x4")
+name = "surprise"
+sketch = ExtResource("2_ct2x4")
+metadata/_custom_type_script = "uid://cv1bna6fcv7fg"

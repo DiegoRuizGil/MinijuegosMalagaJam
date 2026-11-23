@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="PoseInfo" format=3 uid="uid://cly74l1ecn0g8"]
 
 [ext_resource type="Script" uid="uid://cv1bna6fcv7fg" path="res://Minigames/FotomatonMinigame/Scripts/pose_info.gd" id="1_61fhl"]
-[ext_resource type="Texture2D" uid="uid://bi6ercdq2vvjf" path="res://icon.svg" id="2_tci4o"]
+[ext_resource type="Texture2D" uid="uid://5utvdylesuyj" path="res://Minigames/FotomatonMinigame/Images/happy_cat.jpg" id="2_tci4o"]
 
 [resource]
 script = ExtResource("1_61fhl")
