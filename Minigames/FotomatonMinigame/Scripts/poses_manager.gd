@@ -3,10 +3,13 @@ class_name PosesManager
 
 @export var current_pose_timer: Timer
 @export var poses_array: Array[PoseInfo]
+
+@export_category("Character")
+@export var character: FotomatonCharacter
+
+@export_category("UI")
 @export var target_pose_image: TextureRect
 @export var target_pose_label: Label
-@export var current_pose_image: TextureRect
-@export var current_pose_label: Label
 
 var _target_pose: PoseInfo
 var _current_pose: PoseInfo
@@ -33,8 +36,7 @@ func select_next_target_pose() -> void:
 
 func _change_current_pose() -> void:
 	_current_pose = _get_random()
-	current_pose_label.text = _current_pose.name
-	current_pose_image.texture = _current_pose.sketch
+	character.set_pose(_current_pose)
 
 
 func _get_random() -> PoseInfo:

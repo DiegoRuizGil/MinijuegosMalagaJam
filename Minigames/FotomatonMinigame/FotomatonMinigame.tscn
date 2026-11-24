@@ -17,6 +17,9 @@
 [ext_resource type="Texture2D" uid="uid://oug5daolt3v8" path="res://Minigames/FotomatonMinigame/Images/sleepy_cat.jpg" id="14_leudu"]
 [ext_resource type="Texture2D" uid="uid://mpqdrobkdwnb" path="res://Minigames/FotomatonMinigame/Images/surprise_cat.jpg" id="15_34hid"]
 [ext_resource type="Script" uid="uid://cenajphi03xy7" path="res://Minigames/FotomatonMinigame/Scripts/polaroid.gd" id="16_jvjrc"]
+[ext_resource type="Script" uid="uid://bls72inm71vx4" path="res://Minigames/FotomatonMinigame/Scripts/fotomaton_character.gd" id="18_obol8"]
+[ext_resource type="Texture2D" uid="uid://b6tpk7pi43mu7" path="res://Minigames/FotomatonMinigame/Images/angry_cat.jpg" id="18_u4coy"]
+[ext_resource type="Texture2D" uid="uid://5utvdylesuyj" path="res://Minigames/FotomatonMinigame/Images/happy_cat.jpg" id="19_obol8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ty0te"]
 font_size = 30
@@ -26,14 +29,101 @@ font_size = 30
 font_color = Color(0, 0, 0, 1)
 outline_size = 10
 
-[sub_resource type="LabelSettings" id="LabelSettings_w4mfu"]
-font_size = 30
-font_color = Color(0, 0, 0, 1)
-outline_size = 10
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_w4mfu"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ty0te"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ty0te"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_ty0te"]
+
+[sub_resource type="Animation" id="Animation_afom1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pose Mesh:material_override:albedo_texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+
+[sub_resource type="Animation" id="Animation_ncjo6"]
+resource_name = "angry"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pose Mesh:material_override:albedo_texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_u4coy")]
+}
+
+[sub_resource type="Animation" id="Animation_pjw1q"]
+resource_name = "happy"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pose Mesh:material_override:albedo_texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("19_obol8")]
+}
+
+[sub_resource type="Animation" id="Animation_u4coy"]
+resource_name = "sleepy"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pose Mesh:material_override:albedo_texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("14_leudu")]
+}
+
+[sub_resource type="Animation" id="Animation_obol8"]
+resource_name = "surprise"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pose Mesh:material_override:albedo_texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("15_34hid")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kxi6y"]
+_data = {
+&"RESET": SubResource("Animation_afom1"),
+&"angry": SubResource("Animation_ncjo6"),
+&"happy": SubResource("Animation_pjw1q"),
+&"sleepy": SubResource("Animation_u4coy"),
+&"surprise": SubResource("Animation_obol8")
+}
 
 [node name="Fotomaton Minigame" type="Node" unique_id=93012476 node_paths=PackedStringArray("minigame_timer", "player_points", "battery", "camera_lens", "poses_manager", "print_slot")]
 script = ExtResource("1_o28q0")
@@ -45,14 +135,13 @@ poses_manager = NodePath("Poses Manager")
 print_slot = NodePath("CanvasLayer/UI Root/Print Slot")
 minigameData = ExtResource("2_5c2be")
 
-[node name="Poses Manager" type="Node" parent="." unique_id=47831132 node_paths=PackedStringArray("current_pose_timer", "target_pose_image", "target_pose_label", "current_pose_image", "current_pose_label")]
+[node name="Poses Manager" type="Node" parent="." unique_id=47831132 node_paths=PackedStringArray("current_pose_timer", "character", "target_pose_image", "target_pose_label")]
 script = ExtResource("7_mx2n6")
 current_pose_timer = NodePath("Current Pose Timer")
 poses_array = Array[ExtResource("2_storp")]([ExtResource("3_a6myq"), ExtResource("4_qm1a7"), ExtResource("5_tn6ve"), ExtResource("8_djisr")])
+character = NodePath("../Character")
 target_pose_image = NodePath("../CanvasLayer/UI Root/Target Pose")
 target_pose_label = NodePath("../CanvasLayer/UI Root/Target Pose/Target Pose Label")
-current_pose_image = NodePath("../CanvasLayer/UI Root/Current Pose")
-current_pose_label = NodePath("../CanvasLayer/UI Root/Current Pose/Current Pose Label")
 
 [node name="Current Pose Timer" type="Timer" parent="Poses Manager" unique_id=1370710107]
 wait_time = 2.0
@@ -119,34 +208,6 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "croquetas"
 label_settings = SubResource("LabelSettings_bn5ri")
-horizontal_alignment = 1
-
-[node name="Current Pose" type="TextureRect" parent="CanvasLayer/UI Root" unique_id=414522708]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = 300.0
-offset_right = 284.0
-offset_bottom = 516.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_a6myq")
-expand_mode = 1
-
-[node name="Current Pose Label" type="Label" parent="CanvasLayer/UI Root/Current Pose" unique_id=1332952487]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "croquetas"
-label_settings = SubResource("LabelSettings_w4mfu")
 horizontal_alignment = 1
 
 [node name="Camera Lens" type="Control" parent="CanvasLayer/UI Root" unique_id=1173765373]
@@ -384,6 +445,18 @@ light_energy = 3.0
 transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
 mesh = SubResource("PlaneMesh_w4mfu")
 
-[node name="Character" type="MeshInstance3D" parent="." unique_id=1289821771]
+[node name="Character" type="Node3D" parent="." unique_id=1104349598 node_paths=PackedStringArray("anim")]
+script = ExtResource("18_obol8")
+anim = NodePath("AnimationPlayer")
+
+[node name="Mesh" type="MeshInstance3D" parent="Character" unique_id=1289821771]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_ty0te")
+
+[node name="Pose Mesh" type="MeshInstance3D" parent="Character" unique_id=355253266]
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.0005265698, 0, -0.0005265698, 0.9999999, 1.1672648, 0.909462, 0)
+material_override = SubResource("StandardMaterial3D_ty0te")
+mesh = SubResource("QuadMesh_ty0te")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character" unique_id=1614020098]
+libraries/ = SubResource("AnimationLibrary_kxi6y")
