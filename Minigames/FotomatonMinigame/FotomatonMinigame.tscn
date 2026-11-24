@@ -4,13 +4,19 @@
 [ext_resource type="Resource" uid="uid://dhlrhnxsk35rp" path="res://Minigames/FotomatonMinigame/Data/FotomatonData.tres" id="2_5c2be"]
 [ext_resource type="Script" uid="uid://cv1bna6fcv7fg" path="res://Minigames/FotomatonMinigame/Scripts/pose_info.gd" id="2_storp"]
 [ext_resource type="Resource" uid="uid://uy5jxcijn1ux" path="res://Minigames/FotomatonMinigame/Data/Poses/angry_pose.tres" id="3_a6myq"]
-[ext_resource type="Script" uid="uid://byryohecqvrbx" path="res://Minigames/FotomatonMinigame/Scripts/points_controller.gd" id="3_emk4p"]
+[ext_resource type="Script" uid="uid://byryohecqvrbx" path="res://Minigames/FotomatonMinigame/Scripts/fotomaton_points.gd" id="3_emk4p"]
 [ext_resource type="Resource" uid="uid://cly74l1ecn0g8" path="res://Minigames/FotomatonMinigame/Data/Poses/happy_pose.tres" id="4_qm1a7"]
 [ext_resource type="Resource" uid="uid://dwx5g08mi4vyp" path="res://Minigames/FotomatonMinigame/Data/Poses/sleepy_pose.tres" id="5_tn6ve"]
+[ext_resource type="Script" uid="uid://j51imsqjbibv" path="res://Minigames/FotomatonMinigame/Scripts/poses_manager.gd" id="7_mx2n6"]
 [ext_resource type="Texture2D" uid="uid://bi6ercdq2vvjf" path="res://icon.svg" id="8_a6myq"]
+[ext_resource type="Resource" uid="uid://cxx6h5maidjdr" path="res://Minigames/FotomatonMinigame/Data/Poses/surprise_pose.tres" id="8_djisr"]
 [ext_resource type="Script" uid="uid://biexcro6w47q1" path="res://Minigames/FotomatonMinigame/Scripts/camera_lens.gd" id="9_qm1a7"]
 [ext_resource type="Script" uid="uid://d3mummj353njq" path="res://Minigames/FotomatonMinigame/Scripts/battery.gd" id="10_awpip"]
 [ext_resource type="Texture2D" uid="uid://b658jj2qsvfra" path="res://Minigames/FotomatonMinigame/Images/battery.png" id="10_tn6ve"]
+[ext_resource type="Script" uid="uid://bkd3dag5nc47d" path="res://Minigames/FotomatonMinigame/Scripts/print_slot.gd" id="14_5ysns"]
+[ext_resource type="Texture2D" uid="uid://oug5daolt3v8" path="res://Minigames/FotomatonMinigame/Images/sleepy_cat.jpg" id="14_leudu"]
+[ext_resource type="Texture2D" uid="uid://mpqdrobkdwnb" path="res://Minigames/FotomatonMinigame/Images/surprise_cat.jpg" id="15_34hid"]
+[ext_resource type="Script" uid="uid://cenajphi03xy7" path="res://Minigames/FotomatonMinigame/Scripts/polaroid.gd" id="16_jvjrc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ty0te"]
 font_size = 30
@@ -29,28 +35,31 @@ outline_size = 10
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ty0te"]
 
-[node name="Fotomaton Minigame" type="Node" unique_id=93012476 node_paths=PackedStringArray("points_controller", "minigame_timer", "current_pose_timer", "battery", "camera_lens", "target_pose_image", "target_pose_label", "current_pose_image", "current_pose_label")]
+[node name="Fotomaton Minigame" type="Node" unique_id=93012476 node_paths=PackedStringArray("minigame_timer", "player_points", "battery", "camera_lens", "poses_manager", "print_slot")]
 script = ExtResource("1_o28q0")
-points_controller = NodePath("CanvasLayer/UI Root/Points Controller")
-minigame_timer = NodePath("Timers/Minigame Timer")
-current_pose_timer = NodePath("Timers/CurrentPose Timer")
+minigame_timer = NodePath("Minigame Timer")
+player_points = NodePath("CanvasLayer/UI Root/Points Controller")
 battery = NodePath("CanvasLayer/UI Root/Battery")
 camera_lens = NodePath("CanvasLayer/UI Root/Camera Lens")
-poses_array = Array[ExtResource("2_storp")]([ExtResource("3_a6myq"), ExtResource("4_qm1a7"), ExtResource("5_tn6ve")])
-target_pose_image = NodePath("CanvasLayer/UI Root/Target Pose")
-target_pose_label = NodePath("CanvasLayer/UI Root/Target Pose/Target Pose Label")
-current_pose_image = NodePath("CanvasLayer/UI Root/Current Pose")
-current_pose_label = NodePath("CanvasLayer/UI Root/Current Pose/Current Pose Label")
+poses_manager = NodePath("Poses Manager")
+print_slot = NodePath("CanvasLayer/UI Root/Print Slot")
 minigameData = ExtResource("2_5c2be")
 
-[node name="Timers" type="Node" parent="." unique_id=22919050]
+[node name="Poses Manager" type="Node" parent="." unique_id=47831132 node_paths=PackedStringArray("current_pose_timer", "target_pose_image", "target_pose_label", "current_pose_image", "current_pose_label")]
+script = ExtResource("7_mx2n6")
+current_pose_timer = NodePath("Current Pose Timer")
+poses_array = Array[ExtResource("2_storp")]([ExtResource("3_a6myq"), ExtResource("4_qm1a7"), ExtResource("5_tn6ve"), ExtResource("8_djisr")])
+target_pose_image = NodePath("../CanvasLayer/UI Root/Target Pose")
+target_pose_label = NodePath("../CanvasLayer/UI Root/Target Pose/Target Pose Label")
+current_pose_image = NodePath("../CanvasLayer/UI Root/Current Pose")
+current_pose_label = NodePath("../CanvasLayer/UI Root/Current Pose/Current Pose Label")
 
-[node name="Minigame Timer" type="Timer" parent="Timers" unique_id=254923230]
+[node name="Current Pose Timer" type="Timer" parent="Poses Manager" unique_id=1370710107]
+wait_time = 2.0
+
+[node name="Minigame Timer" type="Timer" parent="." unique_id=254923230]
 wait_time = 15.0
 one_shot = true
-
-[node name="CurrentPose Timer" type="Timer" parent="Timers" unique_id=1370710107]
-wait_time = 2.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1261060668]
 
@@ -307,6 +316,63 @@ texture = ExtResource("10_tn6ve")
 [node name="Cooldown" type="Timer" parent="CanvasLayer/UI Root/Battery" unique_id=1912173156]
 one_shot = true
 
+[node name="Print Slot" type="Control" parent="CanvasLayer/UI Root" unique_id=171711129 node_paths=PackedStringArray("polaroid")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+script = ExtResource("14_5ysns")
+polaroid = NodePath("Polaroid")
+debug_photo = ExtResource("15_34hid")
+
+[node name="Polaroid" type="ColorRect" parent="CanvasLayer/UI Root/Print Slot" unique_id=2067260073 node_paths=PackedStringArray("photo", "player_color")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -192.0
+offset_top = -276.0
+offset_right = 192.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 1)
+script = ExtResource("16_jvjrc")
+photo = NodePath("Photo")
+player_color = NodePath("Player Color")
+
+[node name="Photo" type="TextureRect" parent="CanvasLayer/UI Root/Print Slot/Polaroid" unique_id=1308065184]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -176.0
+offset_top = 9.0
+offset_right = 176.0
+offset_bottom = 207.0
+grow_horizontal = 2
+pivot_offset_ratio = Vector2(0.5, 0)
+texture = ExtResource("14_leudu")
+expand_mode = 1
+
+[node name="Player Color" type="ColorRect" parent="CanvasLayer/UI Root/Print Slot/Polaroid" unique_id=1706346866]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -176.0
+offset_top = -50.0
+offset_right = 176.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 1)
+color = Color(0.41568628, 1, 0.4862745, 1)
+
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1346584023]
 transform = Transform3D(1, 0, 0, 0, 0.9776357, 0.21030566, 0, -0.21030566, 0.9776357, 0, 2.3074832, 4.1974235)
 
@@ -318,6 +384,6 @@ light_energy = 3.0
 transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
 mesh = SubResource("PlaneMesh_w4mfu")
 
-[node name="Capsule" type="MeshInstance3D" parent="." unique_id=1289821771]
+[node name="Character" type="MeshInstance3D" parent="." unique_id=1289821771]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_ty0te")

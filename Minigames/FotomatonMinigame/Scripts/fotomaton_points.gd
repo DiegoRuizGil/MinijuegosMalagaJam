@@ -1,5 +1,5 @@
 extends VBoxContainer
-class_name PointsController
+class_name FotoMatonPoints
 
 @export var players_labels: Array[Label]
 
