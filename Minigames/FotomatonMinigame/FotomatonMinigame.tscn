@@ -29,11 +29,16 @@ font_size = 30
 font_color = Color(0, 0, 0, 1)
 outline_size = 10
 
+[sub_resource type="LabelSettings" id="LabelSettings_w4mfu"]
+font_size = 25
+font_color = Color(0, 0, 0, 1)
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_w4mfu"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ty0te"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ty0te"]
+shading_mode = 0
 
 [sub_resource type="QuadMesh" id="QuadMesh_ty0te"]
 
@@ -125,7 +130,7 @@ _data = {
 &"surprise": SubResource("Animation_obol8")
 }
 
-[node name="Fotomaton Minigame" type="Node" unique_id=93012476 node_paths=PackedStringArray("minigame_timer", "player_points", "battery", "camera_lens", "poses_manager", "print_slot")]
+[node name="Fotomaton Minigame" type="Node" unique_id=93012476 node_paths=PackedStringArray("minigame_timer", "player_points", "battery", "camera_lens", "poses_manager", "print_slot", "canvas_layer")]
 script = ExtResource("1_o28q0")
 minigame_timer = NodePath("Minigame Timer")
 player_points = NodePath("CanvasLayer/UI Root/Points Controller")
@@ -133,6 +138,7 @@ battery = NodePath("CanvasLayer/UI Root/Battery")
 camera_lens = NodePath("CanvasLayer/UI Root/Camera Lens")
 poses_manager = NodePath("Poses Manager")
 print_slot = NodePath("CanvasLayer/UI Root/Print Slot")
+canvas_layer = NodePath("CanvasLayer")
 minigameData = ExtResource("2_5c2be")
 
 [node name="Poses Manager" type="Node" parent="." unique_id=47831132 node_paths=PackedStringArray("current_pose_timer", "character", "target_pose_image", "target_pose_label")]
@@ -386,8 +392,13 @@ grow_horizontal = 2
 script = ExtResource("14_5ysns")
 polaroid = NodePath("Polaroid")
 debug_photo = ExtResource("15_34hid")
+show_time = 0.75
+reveal_time = 0.25
+vertical_pos = 100.0
+wait_before_disappearing = 0.5
+disappear_time = 0.25
 
-[node name="Polaroid" type="ColorRect" parent="CanvasLayer/UI Root/Print Slot" unique_id=2067260073 node_paths=PackedStringArray("photo", "player_color")]
+[node name="Polaroid" type="ColorRect" parent="CanvasLayer/UI Root/Print Slot" unique_id=2067260073 node_paths=PackedStringArray("photo", "player_tag", "player_label")]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -402,7 +413,8 @@ grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 1)
 script = ExtResource("16_jvjrc")
 photo = NodePath("Photo")
-player_color = NodePath("Player Color")
+player_tag = NodePath("Player Tag")
+player_label = NodePath("Player Tag/Label")
 
 [node name="Photo" type="TextureRect" parent="CanvasLayer/UI Root/Print Slot/Polaroid" unique_id=1308065184]
 layout_mode = 1
@@ -418,7 +430,7 @@ pivot_offset_ratio = Vector2(0.5, 0)
 texture = ExtResource("14_leudu")
 expand_mode = 1
 
-[node name="Player Color" type="ColorRect" parent="CanvasLayer/UI Root/Print Slot/Polaroid" unique_id=1706346866]
+[node name="Player Tag" type="ColorRect" parent="CanvasLayer/UI Root/Print Slot/Polaroid" unique_id=1706346866]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -433,6 +445,18 @@ grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 1)
 color = Color(0.41568628, 1, 0.4862745, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer/UI Root/Print Slot/Polaroid/Player Tag" unique_id=470874752]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PLAYER X"
+label_settings = SubResource("LabelSettings_w4mfu")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1346584023]
 transform = Transform3D(1, 0, 0, 0, 0.9776357, 0.21030566, 0, -0.21030566, 0.9776357, 0, 2.3074832, 4.1974235)
@@ -454,7 +478,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_ty0te")
 
 [node name="Pose Mesh" type="MeshInstance3D" parent="Character" unique_id=355253266]
-transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.0005265698, 0, -0.0005265698, 0.9999999, 1.1672648, 0.909462, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.0005265698, 0, -0.0005265698, 0.9999999, 0, 1.5, 0.5)
 material_override = SubResource("StandardMaterial3D_ty0te")
 mesh = SubResource("QuadMesh_ty0te")
 

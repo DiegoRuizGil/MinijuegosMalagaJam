@@ -2,12 +2,14 @@ extends ColorRect
 class_name Polaroid
 
 @export var photo: TextureRect
-@export var player_color: ColorRect
+@export var player_tag: ColorRect
+@export var player_label: Label
 
 
 func set_photo(texture: Texture2D, player_id: int) -> void:
 	photo.texture = texture
-	player_color.color = _get_player_color(player_id)
+	player_tag.color = _get_player_color(player_id)
+	player_label.text = "PLAYER " + str(player_id + 1)
 
 
 func _get_player_color(player_id: int) -> Color:

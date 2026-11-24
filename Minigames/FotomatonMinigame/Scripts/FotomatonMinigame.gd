@@ -6,14 +6,17 @@ extends MinigameBase
 @export var camera_lens: CameraLens
 @export var poses_manager: PosesManager
 @export var print_slot: PrintSlot
+@export var canvas_layer: CanvasLayer
 
 
 func _ready() -> void:
 	battery.charged.connect(func(): camera_lens.turn_on())
+	canvas_layer.visible = false
 
 
 func OnMinigameStarted() -> void:
 	poses_manager.start()
+	canvas_layer.visible = true
 
 
 func OnPlayerPressed(playerId: int) -> void:
