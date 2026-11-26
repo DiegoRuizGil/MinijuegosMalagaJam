@@ -4,6 +4,9 @@ class_name PrintSlot
 @export var polaroid: Polaroid
 @export var debug_photo: Texture2D
 
+@export_category("Audio")
+@export var audio_manager: FotomatonAudioManager
+
 @export_category("Tween")
 @export var show_time := 1.0
 @export var reveal_time := 1.0
@@ -13,6 +16,8 @@ class_name PrintSlot
 
 var _hidden_pos: Vector2
 var _tween: Tween
+
+const POLAROID_SFX := preload("res://Minigames/FotomatonMinigame/Audio/SFX/polaroid.wav")
 
 
 func _ready() -> void:
@@ -34,6 +39,7 @@ func print_photo(texture: Texture2D, player_id: int) -> void:
 	polaroid.position = _hidden_pos
 	polaroid.modulate.a = 1.0
 	
+	#audio_manager.play_sfx(POLAROID_SFX, 0.0, 0.05)
 	_tween = create_tween()
 	_tween.tween_property(polaroid, "position:y", vertical_pos, show_time) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)

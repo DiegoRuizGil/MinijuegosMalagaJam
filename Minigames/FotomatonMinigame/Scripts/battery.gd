@@ -4,7 +4,10 @@ class_name Battery
 @export var cooldown_timer: Timer
 @export var empty_color := Color(0.35, 0.35, 0.35)
 @export var jump_height := 20.0
-@export var jump_up_time := 0.12
+@export var jump_up_time := 0.1
+
+@export_category("Audio")
+@export var audio_manager: FotomatonAudioManager
 
 @export_category("Sprites")
 @export var sprites: Array[TextureRect]
@@ -12,6 +15,8 @@ class_name Battery
 signal charged
 
 var _jump_tweens: Array[Tween] = []
+
+const BATTERY_SFX := preload("res://Minigames/FotomatonMinigame/Audio/SFX/battery_0.WAV")
 
 
 func _ready() -> void:
@@ -42,6 +47,7 @@ func _on_cooldown_finished() -> void:
 	for sprite in sprites:
 		sprite.modulate = Color.WHITE
 	_play_ready_wave()
+	audio_manager.play_sfx(BATTERY_SFX)
 	charged.emit()
 
 

@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cv1bna6fcv7fg" path="res://Minigames/FotomatonMinigame/Scripts/pose_info.gd" id="2_storp"]
 [ext_resource type="Resource" uid="uid://uy5jxcijn1ux" path="res://Minigames/FotomatonMinigame/Data/Poses/angry_pose.tres" id="3_a6myq"]
 [ext_resource type="Script" uid="uid://byryohecqvrbx" path="res://Minigames/FotomatonMinigame/Scripts/fotomaton_points.gd" id="3_emk4p"]
+[ext_resource type="Script" uid="uid://clsuwg880s1u5" path="res://Minigames/FotomatonMinigame/Scripts/fotomaton_audio_manager.gd" id="3_ncjo6"]
 [ext_resource type="Resource" uid="uid://cly74l1ecn0g8" path="res://Minigames/FotomatonMinigame/Data/Poses/happy_pose.tres" id="4_qm1a7"]
 [ext_resource type="Resource" uid="uid://dwx5g08mi4vyp" path="res://Minigames/FotomatonMinigame/Data/Poses/sleepy_pose.tres" id="5_tn6ve"]
 [ext_resource type="Script" uid="uid://j51imsqjbibv" path="res://Minigames/FotomatonMinigame/Scripts/poses_manager.gd" id="7_mx2n6"]
@@ -20,6 +21,7 @@
 [ext_resource type="Script" uid="uid://bls72inm71vx4" path="res://Minigames/FotomatonMinigame/Scripts/fotomaton_character.gd" id="18_obol8"]
 [ext_resource type="Texture2D" uid="uid://b6tpk7pi43mu7" path="res://Minigames/FotomatonMinigame/Images/angry_cat.jpg" id="18_u4coy"]
 [ext_resource type="Texture2D" uid="uid://5utvdylesuyj" path="res://Minigames/FotomatonMinigame/Images/happy_cat.jpg" id="19_obol8"]
+[ext_resource type="PackedScene" uid="uid://6ndk23awi5v3" path="res://Minigames/FotomatonMinigame/Objects/fotomaton_fake.glb" id="21_afom1"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ty0te"]
 font_size = 30
@@ -33,7 +35,7 @@ outline_size = 10
 font_size = 25
 font_color = Color(0, 0, 0, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_w4mfu"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ncjo6"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ty0te"]
 
@@ -141,20 +143,24 @@ print_slot = NodePath("CanvasLayer/UI Root/Print Slot")
 canvas_layer = NodePath("CanvasLayer")
 minigameData = ExtResource("2_5c2be")
 
+[node name="Minigame Timer" type="Timer" parent="." unique_id=254923230]
+wait_time = 15.0
+one_shot = true
+
+[node name="Audio Manager" type="Node" parent="." unique_id=214682934]
+script = ExtResource("3_ncjo6")
+
 [node name="Poses Manager" type="Node" parent="." unique_id=47831132 node_paths=PackedStringArray("current_pose_timer", "character", "target_pose_image", "target_pose_label")]
 script = ExtResource("7_mx2n6")
 current_pose_timer = NodePath("Current Pose Timer")
+target_pose_weight = 2.0
 poses_array = Array[ExtResource("2_storp")]([ExtResource("3_a6myq"), ExtResource("4_qm1a7"), ExtResource("5_tn6ve"), ExtResource("8_djisr")])
 character = NodePath("../Character")
 target_pose_image = NodePath("../CanvasLayer/UI Root/Target Pose")
 target_pose_label = NodePath("../CanvasLayer/UI Root/Target Pose/Target Pose Label")
 
 [node name="Current Pose Timer" type="Timer" parent="Poses Manager" unique_id=1370710107]
-wait_time = 2.0
-
-[node name="Minigame Timer" type="Timer" parent="." unique_id=254923230]
-wait_time = 15.0
-one_shot = true
+wait_time = 1.5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1261060668]
 
@@ -206,6 +212,7 @@ texture = ExtResource("8_a6myq")
 expand_mode = 1
 
 [node name="Target Pose Label" type="Label" parent="CanvasLayer/UI Root/Target Pose" unique_id=1273718114]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -216,7 +223,7 @@ text = "croquetas"
 label_settings = SubResource("LabelSettings_bn5ri")
 horizontal_alignment = 1
 
-[node name="Camera Lens" type="Control" parent="CanvasLayer/UI Root" unique_id=1173765373]
+[node name="Camera Lens" type="Control" parent="CanvasLayer/UI Root" unique_id=1173765373 node_paths=PackedStringArray("audio_manager")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -231,7 +238,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(480, 270)
 script = ExtResource("9_qm1a7")
-shoot_scale = 0.9
+audio_manager = NodePath("../../../Audio Manager")
 shoot_duration = 0.1
 turn_on_color = Color(1, 1, 1, 1)
 turn_off_color = Color(0.5211406, 0.5211406, 0.5211405, 1)
@@ -312,7 +319,7 @@ offset_right = 15.0
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0, 1)
 
-[node name="Battery" type="Control" parent="CanvasLayer/UI Root" unique_id=682186129 node_paths=PackedStringArray("cooldown_timer", "sprites")]
+[node name="Battery" type="Control" parent="CanvasLayer/UI Root" unique_id=682186129 node_paths=PackedStringArray("cooldown_timer", "audio_manager", "sprites")]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -323,6 +330,7 @@ grow_horizontal = 0
 grow_vertical = 0
 script = ExtResource("10_awpip")
 cooldown_timer = NodePath("Cooldown")
+audio_manager = NodePath("../../../Audio Manager")
 sprites = [NodePath("Cells/Slot/Battery Sprite 1"), NodePath("Cells/Slot2/Battery Sprite 2"), NodePath("Cells/Slot3/Battery Sprite 3"), NodePath("Cells/Slot4/Battery Sprite 4")]
 
 [node name="Cells" type="HBoxContainer" parent="CanvasLayer/UI Root/Battery" unique_id=114068810]
@@ -383,7 +391,7 @@ texture = ExtResource("10_tn6ve")
 [node name="Cooldown" type="Timer" parent="CanvasLayer/UI Root/Battery" unique_id=1912173156]
 one_shot = true
 
-[node name="Print Slot" type="Control" parent="CanvasLayer/UI Root" unique_id=171711129 node_paths=PackedStringArray("polaroid")]
+[node name="Print Slot" type="Control" parent="CanvasLayer/UI Root" unique_id=171711129 node_paths=PackedStringArray("polaroid", "audio_manager")]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -392,6 +400,7 @@ grow_horizontal = 2
 script = ExtResource("14_5ysns")
 polaroid = NodePath("Polaroid")
 debug_photo = ExtResource("15_34hid")
+audio_manager = NodePath("../../../Audio Manager")
 show_time = 0.75
 reveal_time = 0.25
 vertical_pos = 100.0
@@ -459,28 +468,28 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1346584023]
-transform = Transform3D(1, 0, 0, 0, 0.9776357, 0.21030566, 0, -0.21030566, 0.9776357, 0, 2.3074832, 4.1974235)
+transform = Transform3D(1, 0, 0, 0, 0.9776357, 0.21030566, 0, -0.21030566, 0.9776357, 0, 4.323143, 3.5726929)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1397484098]
-transform = Transform3D(1, 0, 0, 0, 0.52188134, 0.8530181, 0, -0.8530181, 0.52188134, 0, 4.518291, 5.0489707)
-light_energy = 3.0
-
-[node name="Ground" type="MeshInstance3D" parent="." unique_id=1007324174]
-transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
-mesh = SubResource("PlaneMesh_w4mfu")
+transform = Transform3D(0.99524546, -0.08308275, 0.050830446, 3.583174e-08, 0.5218812, 0.85301816, -0.09739855, -0.8489624, 0.51939994, 0.05762911, 6.8612404, 7.0410347)
 
 [node name="Character" type="Node3D" parent="." unique_id=1104349598 node_paths=PackedStringArray("anim")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.579737, -1.6455979)
 script = ExtResource("18_obol8")
 anim = NodePath("AnimationPlayer")
 
 [node name="Mesh" type="MeshInstance3D" parent="Character" unique_id=1289821771]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, -0.08072162)
+material_override = SubResource("StandardMaterial3D_ncjo6")
 mesh = SubResource("CapsuleMesh_ty0te")
 
 [node name="Pose Mesh" type="MeshInstance3D" parent="Character" unique_id=355253266]
-transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.0005265698, 0, -0.0005265698, 0.9999999, 0, 1.5, 0.5)
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.0005265698, 0, -0.0005265698, 0.9999999, 0, 1.8442445, 1.010341)
 material_override = SubResource("StandardMaterial3D_ty0te")
 mesh = SubResource("QuadMesh_ty0te")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Character" unique_id=1614020098]
 libraries/ = SubResource("AnimationLibrary_kxi6y")
+
+[node name="fotomaton_fake" parent="." unique_id=882490631 instance=ExtResource("21_afom1")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.4587107, 0, 0)
