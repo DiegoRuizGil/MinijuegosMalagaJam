@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://b6tpk7pi43mu7" path="res://Minigames/FotomatonMinigame/Images/angry_cat.jpg" id="18_u4coy"]
 [ext_resource type="Texture2D" uid="uid://5utvdylesuyj" path="res://Minigames/FotomatonMinigame/Images/happy_cat.jpg" id="19_obol8"]
 [ext_resource type="PackedScene" uid="uid://6ndk23awi5v3" path="res://Minigames/FotomatonMinigame/Objects/fotomaton_fake.glb" id="21_afom1"]
+[ext_resource type="Shader" uid="uid://bkriayl20a2o5" path="res://Minigames/FotomatonMinigame/Shaders/fisheye.gdshader" id="23_pjw1q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ty0te"]
 font_size = 30
@@ -131,6 +132,10 @@ _data = {
 &"sleepy": SubResource("Animation_u4coy"),
 &"surprise": SubResource("Animation_obol8")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjw1q"]
+shader = ExtResource("23_pjw1q")
+shader_parameter/effect_amount = 1.0
 
 [node name="Fotomaton Minigame" type="Node" unique_id=93012476 node_paths=PackedStringArray("minigame_timer", "player_points", "battery", "camera_lens", "poses_manager", "print_slot", "canvas_layer")]
 script = ExtResource("1_o28q0")
@@ -493,3 +498,20 @@ libraries/ = SubResource("AnimationLibrary_kxi6y")
 
 [node name="fotomaton_fake" parent="." unique_id=882490631 instance=ExtResource("21_afom1")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.4587107, 0, 0)
+
+[node name="Control" type="Control" parent="." unique_id=2021496690]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Fish Eye" type="ColorRect" parent="Control" unique_id=132297276]
+material = SubResource("ShaderMaterial_pjw1q")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
