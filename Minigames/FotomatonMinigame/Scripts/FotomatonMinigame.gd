@@ -4,6 +4,7 @@ extends MinigameBase
 @export var player_points: FotoMatonPoints
 @export var battery: Battery
 @export var camera_lens: CameraLens
+@export var photo_viewport: FotomatonPhotoViewport
 @export var poses_manager: PosesManager
 @export var print_slot: PrintSlot
 @export var canvas_layer: CanvasLayer
@@ -38,6 +39,7 @@ func game_ended() -> void:
 
 
 func _score_point(player_id: int) -> void:
+	var photo := await photo_viewport.capture()
+	print_slot.print_photo(photo, player_id)
 	player_points.add_point(player_id)
-	print_slot.print_photo(poses_manager._current_pose.sketch, player_id)
 	poses_manager.select_next_target_pose()

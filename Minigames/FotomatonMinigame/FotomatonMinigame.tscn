@@ -20,9 +20,15 @@
 [ext_resource type="Script" uid="uid://cenajphi03xy7" path="res://Minigames/FotomatonMinigame/Scripts/polaroid.gd" id="16_jvjrc"]
 [ext_resource type="Script" uid="uid://bls72inm71vx4" path="res://Minigames/FotomatonMinigame/Scripts/fotomaton_character.gd" id="18_obol8"]
 [ext_resource type="Texture2D" uid="uid://b6tpk7pi43mu7" path="res://Minigames/FotomatonMinigame/Images/angry_cat.jpg" id="18_u4coy"]
+[ext_resource type="Shader" uid="uid://d2ir70dbbg5ju" path="res://Minigames/FotomatonMinigame/Shaders/fisheye_texture.gdshader" id="19_dkqvq"]
 [ext_resource type="Texture2D" uid="uid://5utvdylesuyj" path="res://Minigames/FotomatonMinigame/Images/happy_cat.jpg" id="19_obol8"]
 [ext_resource type="PackedScene" uid="uid://6ndk23awi5v3" path="res://Minigames/FotomatonMinigame/Objects/fotomaton_fake.glb" id="21_afom1"]
 [ext_resource type="Shader" uid="uid://bkriayl20a2o5" path="res://Minigames/FotomatonMinigame/Shaders/fisheye.gdshader" id="23_pjw1q"]
+[ext_resource type="Script" uid="uid://crpqp65cp0r6w" path="res://Minigames/FotomatonMinigame/Scripts/photo_viewport.gd" id="24_kxi6y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjw1q"]
+shader = ExtResource("23_pjw1q")
+shader_parameter/effect_amount = 1.40000018525
 
 [sub_resource type="LabelSettings" id="LabelSettings_ty0te"]
 font_size = 30
@@ -31,6 +37,12 @@ font_size = 30
 font_size = 30
 font_color = Color(0, 0, 0, 1)
 outline_size = 10
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kxi6y"]
+shader = ExtResource("19_dkqvq")
+shader_parameter/effect_amount = 1.4
+shader_parameter/screen_size = Vector2(1920, 1080)
+shader_parameter/lens_rect = Vector4(480, 270, 960, 540)
 
 [sub_resource type="LabelSettings" id="LabelSettings_w4mfu"]
 font_size = 25
@@ -133,16 +145,13 @@ _data = {
 &"surprise": SubResource("Animation_obol8")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjw1q"]
-shader = ExtResource("23_pjw1q")
-shader_parameter/effect_amount = 1.0
-
-[node name="Fotomaton Minigame" type="Node" unique_id=93012476 node_paths=PackedStringArray("minigame_timer", "player_points", "battery", "camera_lens", "poses_manager", "print_slot", "canvas_layer")]
+[node name="Fotomaton Minigame" type="Node" unique_id=93012476 node_paths=PackedStringArray("minigame_timer", "player_points", "battery", "camera_lens", "photo_viewport", "poses_manager", "print_slot", "canvas_layer")]
 script = ExtResource("1_o28q0")
 minigame_timer = NodePath("Minigame Timer")
 player_points = NodePath("CanvasLayer/UI Root/Points Controller")
 battery = NodePath("CanvasLayer/UI Root/Battery")
 camera_lens = NodePath("CanvasLayer/UI Root/Camera Lens")
+photo_viewport = NodePath("Photo Viewport")
 poses_manager = NodePath("Poses Manager")
 print_slot = NodePath("CanvasLayer/UI Root/Print Slot")
 canvas_layer = NodePath("CanvasLayer")
@@ -166,6 +175,23 @@ target_pose_label = NodePath("../CanvasLayer/UI Root/Target Pose/Target Pose Lab
 
 [node name="Current Pose Timer" type="Timer" parent="Poses Manager" unique_id=1370710107]
 wait_time = 1.5
+
+[node name="Screen Effects" type="Control" parent="." unique_id=2021496690]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Fish Eye" type="ColorRect" parent="Screen Effects" unique_id=132297276]
+material = SubResource("ShaderMaterial_pjw1q")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1261060668]
 
@@ -250,8 +276,8 @@ turn_off_color = Color(0.5211406, 0.5211406, 0.5211405, 1)
 
 [node name="Top Left" type="ColorRect" parent="CanvasLayer/UI Root/Camera Lens" unique_id=210216105]
 layout_mode = 1
-offset_right = 50.0
-offset_bottom = 15.0
+offset_right = 80.0
+offset_bottom = 10.0
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/UI Root/Camera Lens/Top Left" unique_id=1817948453]
 layout_mode = 0
@@ -264,7 +290,8 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -50.0
-offset_bottom = 15.0
+offset_right = 30.0
+offset_bottom = 10.0
 grow_horizontal = 0
 pivot_offset_ratio = Vector2(1, 0)
 
@@ -287,6 +314,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -50.0
 offset_top = -15.0
+offset_right = 30.0
+offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 pivot_offset_ratio = Vector2(1, 1)
@@ -310,7 +339,8 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -15.0
-offset_right = 50.0
+offset_right = 80.0
+offset_bottom = -5.0
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0, 1)
 
@@ -431,6 +461,7 @@ player_tag = NodePath("Player Tag")
 player_label = NodePath("Player Tag/Label")
 
 [node name="Photo" type="TextureRect" parent="CanvasLayer/UI Root/Print Slot/Polaroid" unique_id=1308065184]
+material = SubResource("ShaderMaterial_kxi6y")
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -472,8 +503,17 @@ label_settings = SubResource("LabelSettings_w4mfu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1346584023]
-transform = Transform3D(1, 0, 0, 0, 0.9776357, 0.21030566, 0, -0.21030566, 0.9776357, 0, 4.323143, 3.5726929)
+[node name="Main Camera" type="Camera3D" parent="." unique_id=1346584023]
+transform = Transform3D(1, 0, 0, 0, 0.9776357, 0.21030566, 0, -0.21030566, 0.9776357, 0, 4.323143, 3.7397552)
+
+[node name="Photo Viewport" type="SubViewport" parent="." unique_id=195824233 node_paths=PackedStringArray("main_camera", "lens", "photo_camera")]
+render_target_update_mode = 0
+script = ExtResource("24_kxi6y")
+main_camera = NodePath("../Main Camera")
+lens = NodePath("../CanvasLayer/UI Root/Camera Lens")
+photo_camera = NodePath("Photo Camera")
+
+[node name="Photo Camera" type="Camera3D" parent="Photo Viewport" unique_id=1879208011]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1397484098]
 transform = Transform3D(0.99524546, -0.08308275, 0.050830446, 3.583174e-08, 0.5218812, 0.85301816, -0.09739855, -0.8489624, 0.51939994, 0.05762911, 6.8612404, 7.0410347)
@@ -498,20 +538,3 @@ libraries/ = SubResource("AnimationLibrary_kxi6y")
 
 [node name="fotomaton_fake" parent="." unique_id=882490631 instance=ExtResource("21_afom1")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.4587107, 0, 0)
-
-[node name="Control" type="Control" parent="." unique_id=2021496690]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Fish Eye" type="ColorRect" parent="Control" unique_id=132297276]
-material = SubResource("ShaderMaterial_pjw1q")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
