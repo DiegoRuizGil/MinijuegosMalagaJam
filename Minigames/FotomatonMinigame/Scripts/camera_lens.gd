@@ -1,6 +1,8 @@
 extends Control
 class_name CameraLens
 
+@export var flash: FotomatonFlash
+
 @export_category("Audio")
 @export var audio_manager: FotomatonAudioManager
 
@@ -21,6 +23,7 @@ func take_photo() -> void:
 	if _tween and _tween.is_valid():
 		_tween.kill()
 	
+	flash.flash()
 	audio_manager.play_sfx(TAKE_PHOTO_SFX, 0.0, 0.05)
 	_tween = create_tween()
 	_tween.tween_property(self, "scale", Vector2.ONE * shoot_scale, shoot_duration) \

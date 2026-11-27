@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://biexcro6w47q1" path="res://Minigames/FotomatonMinigame/Scripts/camera_lens.gd" id="9_qm1a7"]
 [ext_resource type="Script" uid="uid://d3mummj353njq" path="res://Minigames/FotomatonMinigame/Scripts/battery.gd" id="10_awpip"]
 [ext_resource type="Texture2D" uid="uid://b658jj2qsvfra" path="res://Minigames/FotomatonMinigame/Images/battery.png" id="10_tn6ve"]
+[ext_resource type="Script" uid="uid://bjoafhbwx23nj" path="res://Minigames/FotomatonMinigame/Scripts/fotomaton_flash.gd" id="11_0si0a"]
 [ext_resource type="Script" uid="uid://bkd3dag5nc47d" path="res://Minigames/FotomatonMinigame/Scripts/print_slot.gd" id="14_5ysns"]
 [ext_resource type="Texture2D" uid="uid://oug5daolt3v8" path="res://Minigames/FotomatonMinigame/Images/sleepy_cat.jpg" id="14_leudu"]
 [ext_resource type="Texture2D" uid="uid://mpqdrobkdwnb" path="res://Minigames/FotomatonMinigame/Images/surprise_cat.jpg" id="15_34hid"]
@@ -203,6 +204,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Flash" type="ColorRect" parent="CanvasLayer/UI Root" unique_id=490739166]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+script = ExtResource("11_0si0a")
+hold_time = 0.1
+
 [node name="Points Controller" type="VBoxContainer" parent="CanvasLayer/UI Root" unique_id=1333427269 node_paths=PackedStringArray("players_labels")]
 layout_mode = 1
 offset_right = 141.0
@@ -254,7 +267,7 @@ text = "croquetas"
 label_settings = SubResource("LabelSettings_bn5ri")
 horizontal_alignment = 1
 
-[node name="Camera Lens" type="Control" parent="CanvasLayer/UI Root" unique_id=1173765373 node_paths=PackedStringArray("audio_manager")]
+[node name="Camera Lens" type="Control" parent="CanvasLayer/UI Root" unique_id=1173765373 node_paths=PackedStringArray("flash", "audio_manager")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -269,6 +282,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(480, 270)
 script = ExtResource("9_qm1a7")
+flash = NodePath("../Flash")
 audio_manager = NodePath("../../../Audio Manager")
 shoot_duration = 0.1
 turn_on_color = Color(1, 1, 1, 1)
